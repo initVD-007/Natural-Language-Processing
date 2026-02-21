@@ -86,4 +86,4 @@ Contributions are welcome! Feel free to open issues or submit pull requests to e
 This project is open-source. Please check the license terms for more details.
 
 ---
-*Developed with ❤️ for modern education.*
+#phase 1 completed...........
