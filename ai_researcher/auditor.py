@@ -1,12 +1,10 @@
 import google.generativeai as genai
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class AgentC_Auditor:
-    def __init__(self):
-        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+    def __init__(self, api_key: str):
+        if not api_key:
+            raise ValueError("Google API Key is required.")
+        genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel('gemini-3-flash-preview')
 
     def generate_audit_report(self, syllabus_analysis, web_research):
@@ -98,5 +96,8 @@ Keep the tone professional, data-driven, and solution-oriented.
 Avoid generic statements. Be specific and actionable.
 """
 
-        response = self.model.generate_content(prompt)
-        return response.text
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            raise Exception(f"Auditor failed to generate report: {str(e)}")

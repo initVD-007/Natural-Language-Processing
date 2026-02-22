@@ -1,13 +1,11 @@
-import os
 import requests
 import json
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class AgentB_Scout:
-    def __init__(self):
-        self.api_key = os.getenv("SERPER_API_KEY")
+    def __init__(self, api_key: str):
+        if not api_key:
+            raise ValueError("Serper API Key is required.")
+        self.api_key = api_key
 
     def search_2026(self, queries):
         """Goes to the web and returns real-time data for each query."""
@@ -21,11 +19,20 @@ class AgentB_Scout:
                 'Content-Type': 'application/json'
             }
             
-            response = requests.request("POST", url, headers=headers, data=payload)
-            data = response.json()
-            
-            # Extract just the snippets (the useful text)
-            snippets = [item.get('snippet', '') for item in data.get('organic', [])]
-            all_results.append({"query": q, "findings": snippets[:3]}) # Top 3 per query
+            try:
+                response = requests.request("POST", url, headers=headers, data=payload, timeout=10)
+                response.raise_for_status()
+                data = response.json()
+                
+                # Extract just the snippets (the useful text)
+                organic_results = data.get('organic', [])
+                if not organic_results:
+                    snippets = ["No specific results found for this query."]
+                else:
+                    snippets = [item.get('snippet', '') for item in organic_results]
+                
+                all_results.append({"query": q, "findings": snippets[:3]}) # Top 3 per query
+            except requests.exceptions.RequestException as e:
+                all_results.append({"query": q, "findings": [f"Search request failed: {str(e)}"]})
             
         return all_results

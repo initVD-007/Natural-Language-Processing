@@ -2,33 +2,42 @@ import pypdf
 from pptx import Presentation
 import google.generativeai as genai
 import os
-from dotenv import load_dotenv
 import re
-
-load_dotenv()
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+from google.api_core.exceptions import GoogleAPIError
 
 class AgentA_Parser:
+    def __init__(self, api_key: str):
+        if not api_key:
+            raise ValueError("Google API Key is required.")
+        genai.configure(api_key=api_key)
+        self.model = genai.GenerativeModel('gemini-3-flash-preview')
+
     def extract_text(self, uploaded_file):
         """Extracts text from PDF or PPTX bytes."""
         extension = uploaded_file.name.split('.')[-1].lower()
         text = ""
         
-        if extension == "pdf":
-            reader = pypdf.PdfReader(uploaded_file)
-            for page in reader.pages:
-                text += page.extract_text() or ""
-        elif extension in ["pptx", "ppt"]:
-            prs = Presentation(uploaded_file)
-            for slide in prs.slides:
-                for shape in slide.shapes:
-                    if hasattr(shape, "text"):
-                        text += shape.text + " "
+        try:
+            if extension == "pdf":
+                reader = pypdf.PdfReader(uploaded_file)
+                for page in reader.pages:
+                    text += page.extract_text() or ""
+            elif extension in ["pptx", "ppt"]:
+                prs = Presentation(uploaded_file)
+                for slide in prs.slides:
+                    for shape in slide.shapes:
+                        if hasattr(shape, "text"):
+                            text += shape.text + " "
+        except Exception as e:
+            raise Exception(f"Failed to parse document: {str(e)}")
+            
         return text
 
     def analyze_content(self, raw_text):
         """Uses LLM to deeply analyze document structure and generate research queries."""
-        model = genai.GenerativeModel('gemini-3-flash-preview')
+        
+        # Safely truncate if too large to prevent token explosion
+        safe_text = raw_text[:30000]
         
         prompt = f"""
 You are Agent A (The Intelligent Parser).
@@ -88,10 +97,14 @@ SEARCH QUERIES FOR 2026 UPDATES:
 3. "<query 3>"
 
 DOCUMENT TEXT:
-{raw_text[:15000]}
+{safe_text}
 """
-        response = model.generate_content(prompt)
-        return response.text
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            raise Exception(f"LLM Analysis failed: {str(e)}")
+
     def get_search_queries(self, report_text):
         """Extracts the 3 queries from the LLM report using Regex."""
         queries = re.findall(r'"([^"]*2026[^"]*)"', report_text)
