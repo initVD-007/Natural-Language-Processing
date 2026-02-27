@@ -15,7 +15,7 @@ The **Universal Syllabus Researcher** is an intelligent tool designed to parse, 
 
 ## ✨ Key Features
 - **Smart Parsing**: Automatically handles both PDF and PowerPoint (PPTX) formats (up to 10MB limit).
-- **Agent A Intelligence**: Deep semantic analysis to identify the main subject and extract top 5 core topics, using the robust `gemini-1.5-flash-latest` model with resilient exponential backoff.
+- **Agent A Intelligence**: Deep semantic analysis to identify the main subject and extract top 5 core topics, using the robust `gemini-3-flash-preview` model with resilient exponential backoff.
 - **Future-Ready Queries**: Generates targeted search queries focused on 2026 advancements.
 - **Asynchronous Web Scouting**: Agent B securely and asynchronously scouts the web using Serper.dev APIs to rapidly gather current trends without Streamlit UI blocking.
 - **Modern UI**: Clean, responsive Streamlit interface with smart caching to ensure fast consecutive analyses.
@@ -29,6 +29,22 @@ The **Universal Syllabus Researcher** is an intelligent tool designed to parse, 
 - **Parsing Libraries**: `pypdf`, `python-pptx`
 - **Resiliency**: Python `tenacity` library
 - **Environment Management**: `python-dotenv`
+
+---
+## 🚀 Project Phases
+
+### ✅ Phase 1: The AI Parser & Semantic Analyst (Agent A)
+In this initial phase, the system successfully handles the foundation:
+- **Document Ingestion:** Users seamlessly upload existing syllabus files (PDF/PPTX) via a clean Streamlit interface.
+- **Semantic Analysis:** Powered by Google's Gemini-1.5-Flash, Agent A analyzes the extracted text to intelligently identify the main subjects and core topics of the course.
+- **Targeted Query Generation:** The AI generates highly specific "2026" research queries based on the syllabus content, preparing the system for real-time industry scouting.
+
+### ✅ Phase 2: The Web Scout (Agent B)
+Building upon Phase 1, the system now autonomously scouts the web for the latest industry standards:
+- **Asynchronous Execution:** Agent B runs highly efficient, non-blocking asynchronous searches using Serper.dev APIs.
+- **Real-Time Data Gathering:** Fetches the most recent and credible technical advancements, tools, and practices for each generated query.
+- **Resilient Processing:** Employs robust error handling and exponential backoff to ensure reliable data aggregation.
+- **Seamless UI Integration:** Search results are intelligently cached and presented seamlessly in the Streamlit interface for human-in-the-loop review.
 
 ---
 
@@ -105,17 +121,3 @@ This project is open-source. Please check the license terms for more details.
 
 ---
 
-## 🚀 Project Phases
-
-### ✅ Phase 1: The AI Parser & Semantic Analyst (Agent A)
-In this initial phase, the system successfully handles the foundation:
-- **Document Ingestion:** Users seamlessly upload existing syllabus files (PDF/PPTX) via a clean Streamlit interface.
-- **Semantic Analysis:** Powered by Google's Gemini-1.5-Flash, Agent A analyzes the extracted text to intelligently identify the main subjects and core topics of the course.
-- **Targeted Query Generation:** The AI generates highly specific "2026" research queries based on the syllabus content, preparing the system for real-time industry scouting.
-
-### ✅ Phase 2: The Web Scout (Agent B)
-Building upon Phase 1, the system now autonomously scouts the web for the latest industry standards:
-- **Asynchronous Execution:** Agent B runs highly efficient, non-blocking asynchronous searches using Serper.dev APIs.
-- **Real-Time Data Gathering:** Fetches the most recent and credible technical advancements, tools, and practices for each generated query.
-- **Resilient Processing:** Employs robust error handling and exponential backoff to ensure reliable data aggregation.
-- **Seamless UI Integration:** Search results are intelligently cached and presented seamlessly in the Streamlit interface for human-in-the-loop review.
