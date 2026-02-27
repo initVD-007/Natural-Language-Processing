@@ -9,7 +9,7 @@
 ---
 
 ## 🚀 Overview
-The **Universal Syllabus Researcher** is an intelligent tool designed to parse, analyze, and modernize educational documents (PDFs and PPTXs) using cutting-edge AI. Driven by **Agent A (The Intelligent Parser)**, the system extracts core concepts and generates research-focused queries to align any curriculum with **2026 academic and technical standards**.
+The **Universal Syllabus Researcher** is an intelligent tool designed to parse, analyze, and modernize educational documents (PDFs and PPTXs) using cutting-edge AI. Driven by **Agent A (The Intelligent Parser)** and **Agent B (The Web Scout)**, the system extracts core concepts, generates research-focused queries, and autonomously scouts the web to align any curriculum with **2026 academic and technical standards**.
 
 ---
 
@@ -104,4 +104,18 @@ Contributions are welcome! Feel free to open issues or submit pull requests to e
 This project is open-source. Please check the license terms for more details.
 
 ---
-# Phase 2 completed (Agent 2 - Web Scout Integrated)
+
+## 🚀 Project Phases
+
+### ✅ Phase 1: The AI Parser & Semantic Analyst (Agent A)
+In this initial phase, the system successfully handles the foundation:
+- **Document Ingestion:** Users seamlessly upload existing syllabus files (PDF/PPTX) via a clean Streamlit interface.
+- **Semantic Analysis:** Powered by Google's Gemini-1.5-Flash, Agent A analyzes the extracted text to intelligently identify the main subjects and core topics of the course.
+- **Targeted Query Generation:** The AI generates highly specific "2026" research queries based on the syllabus content, preparing the system for real-time industry scouting.
+
+### ✅ Phase 2: The Web Scout (Agent B)
+Building upon Phase 1, the system now autonomously scouts the web for the latest industry standards:
+- **Asynchronous Execution:** Agent B runs highly efficient, non-blocking asynchronous searches using Serper.dev APIs.
+- **Real-Time Data Gathering:** Fetches the most recent and credible technical advancements, tools, and practices for each generated query.
+- **Resilient Processing:** Employs robust error handling and exponential backoff to ensure reliable data aggregation.
+- **Seamless UI Integration:** Search results are intelligently cached and presented seamlessly in the Streamlit interface for human-in-the-loop review.
