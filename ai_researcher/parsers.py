@@ -4,6 +4,7 @@ import google.generativeai as genai
 import os
 import re
 from google.api_core.exceptions import GoogleAPIError
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
 class AgentA_Parser:
     def __init__(self, api_key: str):
@@ -33,6 +34,7 @@ class AgentA_Parser:
             
         return text
 
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, min=4, max=15), retry=retry_if_exception_type(GoogleAPIError))
     def analyze_content(self, raw_text):
         """Uses LLM to deeply analyze document structure and generate research queries."""
         
@@ -58,13 +60,13 @@ Perform the following tasks carefully and concisely:
        • Mention why it is important in the context of the document.
 
 3. 2026 UPDATE SEARCH QUERIES
-   - Generate 3 highly specific and research-focused search queries.
+   - Generate exactly 3 highly specific and research-focused search queries.
    - Each query must:
        • Include the year "2026"
        • Be designed to find recent advancements, updates, or new research
        • Be clear, targeted, and suitable for academic or technical search engines
 
-Output Format (strictly follow this structure):
+CRITICAL: Output Format (strictly follow this markdown structure without adding extra text or commentary):
 
 MAIN SUBJECT:
 <subject name>
@@ -72,24 +74,24 @@ MAIN SUBJECT:
 
 CORE TOPICS:
 1. <Topic Name>
-   - Explanation:
-   - Importance:
+   - Explanation: <Explanation text>
+   - Importance: <Importance text>
 
 2. <Topic Name>
-   - Explanation:
-   - Importance:
+   - Explanation: <Explanation text>
+   - Importance: <Importance text>
 
 3. <Topic Name>
-   - Explanation:
-   - Importance:
+   - Explanation: <Explanation text>
+   - Importance: <Importance text>
 
 4. <Topic Name>
-   - Explanation:
-   - Importance:
+   - Explanation: <Explanation text>
+   - Importance: <Importance text>
 
 5. <Topic Name>
-   - Explanation:
-   - Importance:
+   - Explanation: <Explanation text>
+   - Importance: <Importance text>
 
 SEARCH QUERIES FOR 2026 UPDATES:
 1. "<query 1>"

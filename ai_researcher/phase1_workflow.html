@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 1: Universal Syllabus Researcher</title>
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Neumorphic Dark Theme */
+            --bg-color: #0f172a;
+            /* slate-900 */
+            --card-bg: #1e293b;
+            /* slate-800 */
+            --text-main: #f8fafc;
+            /* slate-50  */
+            --text-muted: #cbd5e1;
+            /* slate-300 */
+
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            /* sky-400 */
+            --accent-color: #38bdf8;
+            --secondary-color: #a78bfa;
+            /* violet-400 */
+
+            --border-glow: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(167, 139, 250, 0.05) 0%, transparent 50%);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .workflow-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-glow);
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 1.2s ease-out;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ambient glow behind card */
+        .workflow-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0%, var(--accent-glow) 25%, transparent 50%);
+            animation: rotateGlow 10s linear infinite;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .mermaid-container {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotateGlow {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Phase 1 Completed</h1>
+        <p class="subtitle">Universal Syllabus Researcher: The Parser & Semantic Analyst</p>
+    </header>
+
+    <div class="workflow-card">
+        <div class="mermaid-container">
+            <div class="mermaid">
+                %%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#1e293b', 'primaryTextColor': '#f8fafc',
+                'primaryBorderColor': '#38bdf8', 'lineColor': '#94a3b8', 'secondaryColor': '#0f172a', 'tertiaryColor':
+                '#1e293b'}}}%%
+                graph TD
+                User([👥 User]) -->|Upload PDF/PPTX| UI[🖥️ Streamlit UI]
+
+                subgraph "🤖 Phase 1: Agent A (The Parser)"
+                UI -->|Extract Text| Extract[📄 Text Extraction]
+                Extract --> Parser[Agent A: Gemini-3.5-Flash]
+                Parser -->|Semantic Analysis| Analysis[🧠 Identify Subject & Core Topics]
+                Parser -->|Generate Queries| Queries[🔍 3 '2026' Search Queries]
+                end
+
+                Queries -.->|Next Phase| Upcoming[🚀 Upcoming:<br />Human Review<br />& Web Scouting]
+
+                %% Custom Styling classes
+                classDef default fill:#0f172a,stroke:#475569,stroke-width:1px,color:#f8fafc;
+                classDef highlight fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+                classDef userNode fill:#020617,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+                classDef upcoming fill:#475569,stroke:#94a3b8,stroke-width:1px,color:#cbd5e1,stroke-dasharray: 5 5;
+
+                class Parser highlight;
+                class User userNode;
+                class Upcoming upcoming;
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Mermaid.js -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+        mermaid.initialize({
+            startOnLoad: true,
+            securityLevel: 'loose',
+            fontFamily: 'Inter',
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryTextColor: '#f8fafc',
+                primaryBorderColor: '#38bdf8',
+                lineColor: '#64748b',
+                secondaryColor: '#0f172a',
+                tertiaryColor: '#1e293b',
+                nodeBorder: '#38bdf8',
+                clusterBkg: 'rgba(30, 41, 59, 0.4)',
+                clusterBorder: 'rgba(56, 189, 248, 0.2)'
+            }
+        });
+    </script>
+</body>
+
+</html>

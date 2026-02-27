@@ -1,4 +1,6 @@
 import google.generativeai as genai
+from google.api_core.exceptions import GoogleAPIError
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
 class AgentC_Auditor:
     def __init__(self, api_key: str):
@@ -7,6 +9,7 @@ class AgentC_Auditor:
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel('gemini-3-flash-preview')
 
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, min=4, max=15), retry=retry_if_exception_type(GoogleAPIError))
     def generate_audit_report(self, syllabus_analysis, web_research):
         """Compares syllabus with live web data to find gaps and modernization strategy."""
 

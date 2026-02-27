@@ -14,17 +14,20 @@ The **Universal Syllabus Researcher** is an intelligent tool designed to parse, 
 ---
 
 ## ✨ Key Features
-- **Smart Parsing**: Automatically handles both PDF and PowerPoint (PPTX) formats.
-- **Agent A Intelligence**: Deep semantic analysis to identify the main subject and extract top 5 core topics.
+- **Smart Parsing**: Automatically handles both PDF and PowerPoint (PPTX) formats (up to 10MB limit).
+- **Agent A Intelligence**: Deep semantic analysis to identify the main subject and extract top 5 core topics, using the robust `gemini-1.5-flash-latest` model with resilient exponential backoff.
 - **Future-Ready Queries**: Generates targeted search queries focused on 2026 advancements.
-- **Modern UI**: Clean, responsive Streamlit interface for seamless user experience.
+- **Asynchronous Web Scouting**: Agent B securely and asynchronously scouts the web using Serper.dev APIs to rapidly gather current trends without Streamlit UI blocking.
+- **Modern UI**: Clean, responsive Streamlit interface with smart caching to ensure fast consecutive analyses.
 
 ---
 
 ## 🛠️ Tech Stack
 - **Frontend/App Framework**: Streamlit
-- **AI Core**: Google Gemini (via `google-generativeai`)
+- **AI Core**: Google Gemini (`google-generativeai`)
+- **Web Search**: Serper API (`aiohttp`, `asyncio`)
 - **Parsing Libraries**: `pypdf`, `python-pptx`
+- **Resiliency**: Python `tenacity` library
 - **Environment Management**: `python-dotenv`
 
 ---
@@ -65,6 +68,21 @@ Open your browser and navigate to the local URL (usually `http://localhost:8501`
 
 ---
 
+## 🐳 Docker Deployment
+
+The Universal Syllabus Researcher is fully containerized for easy deployment to platforms like Render, Railway, or Google Cloud Run.
+
+### Using Docker Compose (Local Testing)
+1. Ensure Docker Desktop is installed.
+2. Ensure your `.env` file is configured with your API keys.
+3. Run:
+   ```bash
+   docker-compose up --build
+   ```
+4. Access the app at `http://localhost:8501`.
+
+---
+
 ## 📁 Directory Structure
 ```text
 .
@@ -86,4 +104,4 @@ Contributions are welcome! Feel free to open issues or submit pull requests to e
 This project is open-source. Please check the license terms for more details.
 
 ---
-# phase 1 completed...........
+# Phase 2 completed (Agent 2 - Web Scout Integrated)
