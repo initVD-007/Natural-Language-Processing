@@ -25,7 +25,7 @@ The **Universal Syllabus Researcher** is an intelligent tool designed to parse, 
 ## 🛠️ Tech Stack
 - **Frontend/App Framework**: Streamlit
 - **AI Core**: Google Gemini (`google-generativeai`)
-- **Web Search**: Serper API (`aiohttp`, `asyncio`)
+- **Web Search**: Serper API (`requests`, `json`)
 - **Parsing Libraries**: `pypdf`, `python-pptx`
 - **Resiliency**: Python `tenacity` library
 - **Environment Management**: `python-dotenv`
@@ -40,11 +40,60 @@ In this initial phase, the system successfully handles the foundation:
 - **Targeted Query Generation:** The AI generates highly specific "2026" research queries based on the syllabus content, preparing the system for real-time industry scouting.
 
 ### ✅ Phase 2: The Web Scout (Agent B)
-Building upon Phase 1, the system now autonomously scouts the web for the latest industry standards:
-- **Asynchronous Execution:** Agent B runs highly efficient, non-blocking asynchronous searches using Serper.dev APIs.
+Building upon Phase 1, the system allows humans to review and refine queries before autonomously scouting the web for the latest industry standards:
+- **Human-in-the-Loop:** Users can optionally edit the AI-generated queries to ensure they perfectly match their modernization goals.
+- **Asynchronous Execution:** Agent B runs highly efficient asynchronous searches using Serper.dev APIs.
 - **Real-Time Data Gathering:** Fetches the most recent and credible technical advancements, tools, and practices for each generated query.
-- **Resilient Processing:** Employs robust error handling and exponential backoff to ensure reliable data aggregation.
-- **Seamless UI Integration:** Search results are intelligently cached and presented seamlessly in the Streamlit interface for human-in-the-loop review.
+
+### ✅ Phase 3: The Academic Auditor (Agent C)
+The final stage synthesizes the parsed syllabus with the live web data to produce actionable insights:
+- **Gap Analysis:** Agent C acts as a strict academic auditor, cross-referencing the original curriculum against the 2026 real-world tech stack data.
+- **Comprehensive Reporting:** Generates a full markdown `Modernization Report` highlighting knowledge gaps, scoring current relevance, and building a strategic upgrade roadmap.
+- **Export & Download:** Users can instantly download the tailored markdown report directly from the Streamlit interface.
+
+---
+
+## 🗺️ System Architecture Workflow
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#1e293b', 'primaryTextColor': '#f8fafc', 'primaryBorderColor': '#38bdf8', 'lineColor': '#94a3b8', 'secondaryColor': '#0f172a', 'tertiaryColor': '#1e293b'}}}%%
+graph TD
+    User([👥 User]) -->|Upload PDF/PPTX| UI[🖥️ Streamlit UI]
+    
+    subgraph "🤖 Agent A: The Parser"
+        UI -->|Extract Text| Extract[📄 Text Extraction]
+        Extract --> Parser[Agent A: Gemini-3.5-Flash]
+        Parser -->|Semantic Analysis| Analysis[🧠 Identify Subject & Core Topics]
+        Parser -->|Generate Queries| Queries[🔍 3 '2026' Search Queries]
+    end
+    
+    subgraph "👤 Human-in-the-Loop"
+        Queries -->|Review & Edit| HITL{User Refines Queries}
+    end
+    
+    subgraph "🌐 Agent B: The Scout"
+        HITL -->|Final Queries| Scout[Agent B: Serper API]
+        Scout -->|Search Web| LiveData[(Real-Time Web Data)]
+    end
+    
+    subgraph "🎓 Agent C: The Auditor"
+        Analysis --> Auditor[Agent C: Gemini-3.5-Flash]
+        LiveData --> Auditor
+        Auditor -->|Gap Analysis & Strategy| Report[📄 Final Modernization Report]
+    end
+    
+    Report -->|Download Markdown| User
+    
+    %% Custom Styling
+    classDef default fill:#0f172a,stroke:#475569,stroke-width:1px,color:#f8fafc;
+    classDef highlight fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef action fill:#0f172a,stroke:#a78bfa,stroke-width:2px,color:#f8fafc,stroke-dasharray: 5 5;
+    classDef userNode fill:#020617,stroke:#10b981,stroke-width:2px,color:#f8fafc;
+    
+    class Parser,Scout,Auditor highlight;
+    class HITL,UI action;
+    class User userNode;
+```
 
 ---
 
