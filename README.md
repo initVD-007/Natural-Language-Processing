@@ -11,16 +11,32 @@
 ## 🚀 Overview
 The **Universal Syllabus Researcher** is an intelligent tool designed to parse, analyze, and modernize educational documents (PDFs and PPTXs) using cutting-edge AI. Driven by **Agent A (The Intelligent Parser)**, the system extracts core concepts and generates research-focused queries to align any curriculum with **2026 academic and technical standards**.
 
-## 📸 Workflow Demo
+## 📸 Workflow Demo & Architecture
 ![Workflow Demo](./workflow_demo.png)
+
+### 🧩 System Architecture
+```mermaid
+graph TD
+    User([🎓 Educator / User]) -->|Uploads PDF/PPTX| UI[🖥️ Streamlit Frontend]
+    UI -->|Sends Document Data| AgentA[🧠 Agent A: Intelligent Parser]
+    
+    subgraph Multi-Agent AI System
+        AgentA -->|Extracts Text & Structure| Engine[⚙️ Core Processing Engine]
+        Engine -->|Performs Semantic Analysis| Concepts[💡 Core Concept Identification]
+        Concepts -->|Aligns with 2026 Standards| QueryGen[🎯 Targeted Query Generator]
+    end
+    
+    QueryGen -->|Produces Focused Topics| Output[📊 Modernized Syllabus Blueprint]
+    Output --> UI
+```
 
 ---
 
 ## ✨ Key Features
-- **Smart Parsing**: Automatically handles both PDF and PowerPoint (PPTX) formats.
-- **Agent A Intelligence**: Deep semantic analysis to identify the main subject and extract top 5 core topics.
-- **Future-Ready Queries**: Generates targeted search queries focused on 2026 advancements.
-- **Modern UI**: Clean, responsive Streamlit interface for seamless user experience.
+- **📄 Smart Parsing**: Automatically handles both PDF and PowerPoint (PPTX) document formats.
+- **🧠 Agent A Intelligence**: Deep semantic analysis to identify the main subject and extract the top 5 core topics.
+- **🎯 Future-Ready Queries**: Generates targeted research queries focused strictly on 2026 advancements.
+- **🎨 Modern UI**: Clean, responsive Streamlit interface for a seamless and attractive user experience.
 
 ---
 
@@ -71,11 +87,16 @@ Open your browser and navigate to the local URL (usually `http://localhost:8501`
 ## 📁 Directory Structure
 ```text
 .
-├── app.py              # Main Streamlit Application
-├── parsers.py          # Agent A Implementation (Logic & AI)
-├── .env                # API Keys (Git Ignored)
-├── .gitignore          # Git Exclusion Rules
-└── README.md           # Documentation
+├── ai_researcher/          # Main Application Module
+│   ├── app.py              # 🖥️ Main Streamlit Frontend
+│   ├── parsers.py          # 🧠 Agent A (Parser Logic)
+│   ├── auditor.py          # 🧐 Agent C (Auditor Logic)
+│   ├── scout.py            # 🕵️ Agent B (Scout Logic)
+│   ├── Dockerfile          # 🐳 Docker Container Config
+│   └── docker-compose.yml  # 🏗️ Multi-container deployment
+├── workflow_demo.png       # 📸 App Screenshot Demo
+├── .gitignore              # Git Exclusion Rules
+└── README.md               # 📖 Documentation
 ```
 
 ---
