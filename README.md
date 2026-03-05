@@ -11,10 +11,8 @@
 ## 🚀 Overview
 The **Universal Syllabus Researcher** is an intelligent tool designed to parse, analyze, and modernize educational documents (PDFs and PPTXs) using cutting-edge AI. Driven by **Agent A (The Intelligent Parser)**, the system extracts core concepts and generates research-focused queries to align any curriculum with **2026 academic and technical standards**.
 
-## 📸 Workflow Demo & Architecture
-![Workflow Demo](./workflow_demo.png)
 
-### 🧩 System Architecture
+## 📸 Workflow Demo & Architecture
 ```mermaid
 graph TD
     User([🎓 Educator / User]) -->|Uploads PDF/PPTX| UI[🖥️ Streamlit Frontend]
